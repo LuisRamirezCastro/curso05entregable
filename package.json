@@ -4,7 +4,7 @@
   "description": "Entregable Final Curso 05 - Conceptos Avanzados de Automatizacion de Pruebas",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx wdio"
   },
   "repository": {
     "type": "git",
