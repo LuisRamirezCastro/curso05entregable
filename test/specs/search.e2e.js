@@ -79,7 +79,7 @@ describe('Search Page Tests', () => {
         //expect(HomePage.homeContenedor).toExist();
     });
 
-    it('Search Page 2.b. Search for Maria updated existing results and locates her', () => {
+    it.skip('Search Page 2.b. Search for Maria updated existing results and locates her', () => {
         
         expect(SearchPage.resultName).not.toHaveTextContaining("Maria")
         SearchPage.search("Maria");
