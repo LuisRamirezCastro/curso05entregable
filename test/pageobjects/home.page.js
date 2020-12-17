@@ -13,10 +13,10 @@ class HomePage extends Page {
     // Element outside overlay
     get removeOverlay() { return $('div.overlay')}
     // Search elements
-    get inputBusqueda () { return $('#search-input') }
-    get btnBuscar () { return $('input.btn_search') }
+    get inputSearch () { return $('#search-input') }
+    get btnSearch () { return $('input.btn_search') }
     // Page container
-    get homeContenedor () {return $('div.hero_home')}
+    get containerHomePage () {return $('div.hero_home')}
 
     /**
      * a method to encapsule automation code to interact with the page
@@ -25,12 +25,12 @@ class HomePage extends Page {
     
      // SEARCHES
     search (name) {
-        this.inputBusqueda.setValue(name);
-        this.btnBuscar.click(); 
+        this.inputSearch.setValue(name);
+        this.btnSearch.click(); 
     }
     searchNoText () {
         //this.inputBusqueda.setValue('');
-        this.btnBuscar.click(); 
+        this.btnSearch.click(); 
     }
     // SPECIALITIES SELECTION
     selectPhisicalSpeciality(){

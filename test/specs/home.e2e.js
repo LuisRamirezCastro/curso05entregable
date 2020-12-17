@@ -17,11 +17,11 @@ describe('Home Page Tests', () => {
         
         // Executes search with no text
         HomePage.searchNoText();
-        expect(HomePage.btnBuscar).toBeFocused();
+        expect(HomePage.inputSearch).not.toBeFocused();
         // Validates search did not jump to Search Page and stays in Home Page
-        expect(SearchPage.searchContenedor).not.toBePresent();
-        expect(HomePage.homeContenedor).toBePresent();
-        expect(HomePage.homeContenedor).toExist();
+        expect(SearchPage.containerSearchPage).not.toBePresent();
+        expect(HomePage.containerHomePage).toBePresent();
+        //expect(HomePage.containerHomePage).toExist();
     });
 
 
@@ -32,25 +32,25 @@ describe('Home Page Tests', () => {
 
         // Selects 'Phisical' speciality and search input get focus
         HomePage.selectPhisicalSpeciality();
-        expect(HomePage.inputBusqueda).toBeFocused();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        expect(HomePage.inputSearch).toBeFocused();
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderInFocus);
         // Clicking elsewhere removes focus from search input
         HomePage.removeFocus();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderOutFocus);
 
         // Selects 'Language' speciality and search input get focus        
         HomePage.selectLanguajeSpeciality();
-        expect(HomePage.inputBusqueda).toBeFocused();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        expect(HomePage.inputSearch).toBeFocused();
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderInFocus);
         HomePage.removeFocus();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderOutFocus);
 
         // Selects 'Ocupational' speciality and search input get focus        
         HomePage.selectOcupationalSpeciality();
-        expect(HomePage.inputBusqueda).toBeFocused();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        expect(HomePage.inputSearch).toBeFocused();
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderInFocus);
         HomePage.removeFocus();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
+        expect(HomePage.inputSearch).toHaveAttrContaining('placeholder', placeholderOutFocus);
     });
 
 
@@ -60,13 +60,13 @@ describe('Home Page Tests', () => {
 
         // Search for given person and validates Home page is no longer displayed
         HomePage.search(user.name)
-        expect(HomePage.homeContenedor).not.toBePresent();
+        expect(HomePage.containerHomePage).not.toBePresent();
         // Validates Search Page is displayed
-        expect(SearchPage.searchContenedor).toBePresent();
+        expect(SearchPage.containerSearchPage).toBePresent();
         // Validates there are results, 'No hay resultados para mostrar.' message won't display
         expect(SearchPage.noResultsMessage).not.toBePresent();
         // Validates given person is the top result
-        expect(SearchPage.resultName).toHaveTextContaining(user.name);
+        expect(SearchPage.firstResultName).toHaveTextContaining(user.name);
     });
 });
 

@@ -8,18 +8,18 @@ class SearchPage extends Page {
      * define selectors using getter methods
      */
     // Search elements
-    get inputBusqueda () { return $('div .search_bar_list').$('.form-control') }
-    get btnBuscar () { return $('div .search_bar_list').$('[value="Buscar"]') }
+    get inputSearch () { return $('div .search_bar_list').$('.form-control') }
+    get btnSearch () { return $('div .search_bar_list').$('[value="Buscar"]') }
     // Map elements
-    get linkLista () { return $('i.icon-th-list').$('..') }
-    get linkMapa () { return $('i.icon-map-1').$('..') }
-    get contenedorMapa () { return $('#map') }
+    get linkList () { return $('i.icon-th-list').$('..') }
+    get linkMap () { return $('i.icon-map-1').$('..') }
+    get containerMap () { return $('#map') }
     // Search Page container
-    get searchContenedor () {return $('#results') }
+    get containerSearchPage () {return $('#results') }
     // No results message
     get noResultsMessage () {return $('p=No hay resultados para mostrar.')}
     // Search results' first element
-    get resultName () { return $('div.strip_list:nth-child(1)').$('h3') }
+    get firstResultName () { return $('div.strip_list:nth-child(1)').$('h3') }
 
     // Specialities
     clickSpecialityByName(name){
@@ -28,14 +28,14 @@ class SearchPage extends Page {
     }
     // Map or List view
     mapView(){
-        this.linkMapa.click();
+        this.linkMap.click();
     }
     listView(){
-        this.linkLista.click();
+        this.linkList.click();
     }
     search (name) {
-        this.inputBusqueda.setValue(name);
-        this.btnBuscar.click(); 
+        this.inputSearch.setValue(name);
+        this.btnSearch.click(); 
     }
 
     open () {

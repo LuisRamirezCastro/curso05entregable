@@ -31,10 +31,10 @@ describe('Search Page Tests', () => {
         
         const user = defaultUser();
         // Validates the first result is not user to be searched
-        expect(SearchPage.resultName).not.toHaveTextContaining(user.name)
+        expect(SearchPage.firstResultName).not.toHaveTextContaining(user.name)
         // Searches for given user and validates is the first result
         SearchPage.search(user.name);
-        expect(SearchPage.resultName).toHaveTextContaining(user.name)
+        expect(SearchPage.firstResultName).toHaveTextContaining(user.name)
     });
 
     it('Search Page 2.c. Toggle Map/List view hides/show Map', () => {
@@ -42,21 +42,21 @@ describe('Search Page Tests', () => {
         const activeClass = 'active';
 
         // Map view is expected by default
-        expect(SearchPage.contenedorMapa).toBeVisible()
+        expect(SearchPage.containerMap).toBeVisible()
 
         // Clicks on 'List" view and expects icons to be enabled/disable accordingly
         SearchPage.listView();
-        expect(SearchPage.linkLista).not.toHaveAttributeContaining('class', activeClass)
-        expect(SearchPage.linkMapa).toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkList).not.toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkMap).toHaveAttributeContaining('class', activeClass)
         // Validates map is not visible
-        expect(SearchPage.contenedorMapa).not.toBeVisible()
+        expect(SearchPage.containerMap).not.toBeVisible()
 
         // Clicks on 'Map" view and expects icons to be enabled/disable accordingly
         SearchPage.mapView();
-        expect(SearchPage.linkMapa).not.toHaveAttributeContaining('class', activeClass)
-        expect(SearchPage.linkLista).toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkMap).not.toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkList).toHaveAttributeContaining('class', activeClass)
         // Validates map is visible
-        expect(SearchPage.contenedorMapa).toBeVisible()        
+        expect(SearchPage.containerMap).toBeVisible()        
     });
 });
 
