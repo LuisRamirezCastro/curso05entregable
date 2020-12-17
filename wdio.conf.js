@@ -103,6 +103,7 @@ exports.config = {
     // gets prepended directly.
     baseUrl: 'https://develop.terapeutica.digital/#/',
     //
+    // Sets general variables to be consumed later on the tests
     // Default timeout for all waitFor* commands.
     waitforTimeout: 5000,
     //

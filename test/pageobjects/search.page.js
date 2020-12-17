@@ -7,41 +7,36 @@ class SearchPage extends Page {
     /**
      * define selectors using getter methods
      */
-    // get linkFisica () { return $('=Física') }
-    // get linkLenguaje () { return $('=Lenguaje') }
-    // get linkOcupacional () { return $('=Ocupacional') }
-
-    get inputBusqueda () { return $('div .search_bar_list').$('.form-control') } // //*[@id="results"]/div/div/div[2]/div/input[1]
+    // Search elements
+    get inputBusqueda () { return $('div .search_bar_list').$('.form-control') }
     get btnBuscar () { return $('div .search_bar_list').$('[value="Buscar"]') }
-
-    get linkLista () { return $('.icon-th-list').$('..') }
-    get linkMapa () { return $('.icon-map-1').$('..') }
+    // Map elements
+    get linkLista () { return $('i.icon-th-list').$('..') }
+    get linkMapa () { return $('i.icon-map-1').$('..') }
     get contenedorMapa () { return $('#map') }
-
+    // Search Page container
     get searchContenedor () {return $('#results') }
+    // No results message
+    get noResultsMessage () {return $('p=No hay resultados para mostrar.')}
+    // Search results' first element
+    get resultName () { return $('div.strip_list:nth-child(1)').$('h3') }
 
-    get resultName () { return $('.strip_list:nth-child(1)').$('h3') } // //*[@id="app"]/div[2]/main/div[3]/div/div/div[1]/h3
-
-    linkEspecialidad = '=[name]';
-
-    btnAddProductToCartByName(name) {
-        return $(this.linkEspecialidad.replace('[name]', name))
+    // Specialities
+    clickSpecialityByName(name){
+        const linkEspecialidad = '=[name]';
+        $(linkEspecialidad.replace('[name]', name)).click();
     }
-
-    getLinkByName(name){
-        return $(this.linkEspecialidad.replace('[name]', name))
+    // Map or List view
+    mapView(){
+        this.linkMapa.click();
     }
-
-    getPageUrl(){
-        return browser.getUrl
+    listView(){
+        this.linkLista.click();
     }
-
-
     search (name) {
         this.inputBusqueda.setValue(name);
         this.btnBuscar.click(); 
     }
-
 
     open () {
         //https://develop.terapeutica.digital/#/search?sp=all

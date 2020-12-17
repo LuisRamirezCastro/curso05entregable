@@ -1,6 +1,5 @@
-const defaultSpecialities = require('../helpers/data.helper');
+const {defaultUser, defaultSpecialities} = require('../helpers/data.helper');
 
-//const HomePage = require('../pageobjects/home.page');
 const SearchPage = require('../pageobjects/search.page');
 
 describe('Search Page Tests', () => {
@@ -10,97 +9,54 @@ describe('Search Page Tests', () => {
     })
 
     beforeEach( () => {
-        //browser.reloadSession();
+        browser.reloadSession();
         SearchPage.open();
     })
     
-    it.skip('Seach Page 2.a. Click speciality updates URL', () => {
+    it('Search Page 2.a. Click speciality updates URL', () => {
         
         // FÍSICA - LENGUAJE - OCUPACIONAL
-
-        SearchPage.getLinkByName('FÍSICA').click();
-        expect(browser).toHaveUrlContaining('phisical')
-
-        SearchPage.getLinkByName('LENGUAJE').click();
-        expect(browser).toHaveUrlContaining('language')
-
-        SearchPage.getLinkByName('OCUPACIONAL').click();
-        expect(browser).toHaveUrlContaining('ocupational')
-
-
-        // let specialities = defaultSpecialities();
-
-        // for (speciality in specialities){
-        //     SearchPage.getLinkByName(speciality.name).click();
-        //     console.log('- - - - - - - - - - - - - - - - -');
-        //     console.log(browser.getUrl());
-        //     console.log('- - - - - - - - - - - - - - - - -');
-            
-            //expect(browser.getUrl()).toHaveUrlContaining('phisical') 
-            // SearchPage.getLinkByName('LENGUAJE').click();
-            // console.log(browser.getUrl());
-            // //expect(browser.getUrl()).toHaveUrlContaining('language')
-            // SearchPage.getLinkByName('OCUPACIONAL').click();
-            // console.log(browser.getUrl());
+        const specialities = defaultSpecialities();
         
-        
-        
-        //expect(browser.getUrl()).toHaveUrlContaining('ocupational')
-
-        // const specialities = [
-        //     {
-        //         "name": "Física",
-        //         "url": "phisical"
-        //     },
-        //     {
-        //         "name": 'Lenguaje',
-        //         "url": 'language'
-        //     },
-        //     {
-        //         "name": 'Ocupacional',
-        //         "url": 'ocupational'
-        //     }
-        // ]
-
-        // for (speciality in specialities){
-
-        //     console.log(specialities)
-
-        //     SearchPage.getLinkByName(speciality.name).click();
-        //     expect(SearchPage.getPageUrl).toHaveUrlContaining(speciality.url)
-
-        //     console.log(speciality.name + " - - " + speciality.url)
-        // }
-
-
-        //expect(HomePage.btnBuscar).toBeFocused();
-        // TODO Validar que esté en la misma página
-        //expect(HomePage.homeContenedor).toBePresent();
-        //expect(HomePage.homeContenedor).toExist();
+        for (speciality of specialities){
+            // Search speciality by its name and clicks the desired link
+            SearchPage.clickSpecialityByName(speciality.name);
+            // Assert the URL contains the expected speciality
+            expect(browser).toHaveUrlContaining(speciality.url)
+        }
     });
 
-    it.skip('Search Page 2.b. Search for Maria updated existing results and locates her', () => {
-        
-        expect(SearchPage.resultName).not.toHaveTextContaining("Maria")
-        SearchPage.search("Maria");
-        expect(SearchPage.resultName).toHaveTextContaining("Maria")
 
+    it('Search Page 2.b. Search for Maria updates existing results and locates her', () => {
+        
+        const user = defaultUser();
+        // Validates the first result is not user to be searched
+        expect(SearchPage.resultName).not.toHaveTextContaining(user.name)
+        // Searches for given user and validates is the first result
+        SearchPage.search(user.name);
+        expect(SearchPage.resultName).toHaveTextContaining(user.name)
     });
 
-    it.skip('Search Page 2.c. Toggle Map/List view hides/show Map', () => {
+    it('Search Page 2.c. Toggle Map/List view hides/show Map', () => {
         
-        //expect(SearchPage.linkMapa).toHaveAttributeContaining('class', 'active')
+        const activeClass = 'active';
+
+        // Map view is expected by default
         expect(SearchPage.contenedorMapa).toBeVisible()
 
-        SearchPage.linkLista.click();
-        expect(SearchPage.linkLista).not.toHaveAttributeContaining('class', 'active')
-        expect(SearchPage.linkMapa).toHaveAttributeContaining('class', 'active')
+        // Clicks on 'List" view and expects icons to be enabled/disable accordingly
+        SearchPage.listView();
+        expect(SearchPage.linkLista).not.toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkMapa).toHaveAttributeContaining('class', activeClass)
+        // Validates map is not visible
         expect(SearchPage.contenedorMapa).not.toBeVisible()
 
-        SearchPage.linkMapa.click();
-        expect(SearchPage.linkMapa).not.toHaveAttributeContaining('class', 'active')
-        expect(SearchPage.contenedorMapa).toBeVisible()
-        expect(SearchPage.linkLista).toHaveAttributeContaining('class', 'active')        
+        // Clicks on 'Map" view and expects icons to be enabled/disable accordingly
+        SearchPage.mapView();
+        expect(SearchPage.linkMapa).not.toHaveAttributeContaining('class', activeClass)
+        expect(SearchPage.linkLista).toHaveAttributeContaining('class', activeClass)
+        // Validates map is visible
+        expect(SearchPage.contenedorMapa).toBeVisible()        
     });
 });
 

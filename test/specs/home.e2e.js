@@ -6,50 +6,67 @@ const SearchPage = require('../pageobjects/search.page');
 describe('Home Page Tests', () => {
     
     before( () =>{
-        
     })
 
     beforeEach( () => {
-        //browser.reloadSession();
+        browser.reloadSession();
         HomePage.open();
     })
     
-    it.skip('Home Page 1.a. Search button does not redirect to other page', () => {
+    it('Home Page 1.a. Search does not redirect to other page when no text is given', () => {
         
-        HomePage.search('')
+        // Executes search with no text
+        HomePage.searchNoText();
         expect(HomePage.btnBuscar).toBeFocused();
-        // TODO Validar que esté en la misma página
+        // Validates search did not jump to Search Page and stays in Home Page
+        expect(SearchPage.searchContenedor).not.toBePresent();
         expect(HomePage.homeContenedor).toBePresent();
         expect(HomePage.homeContenedor).toExist();
     });
 
-    it.skip('Home Page 1.b. Specialities update placeholder and get search focus', () => {
-        
-        HomePage.inputFisica.click()
-        expect(HomePage.inputBusqueda).toBeFocused();
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', '¿Buscas a alguien o algo en específico?');
-        HomePage.removeOverlay.click()
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', 'Ejemplo: Nombre, Especialidad...');
 
-        HomePage.inputLenguaje.click()
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', '¿Buscas a alguien o algo en específico?');
-        HomePage.removeOverlay.click()
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', 'Ejemplo: Nombre, Especialidad...');
+    it('Home Page 1.b. Specialities update placeholder and get search focus', () => {
         
-        HomePage.inputOcupacional.click()
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', '¿Buscas a alguien o algo en específico?');
-        HomePage.removeOverlay.click()
-        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', 'Ejemplo: Nombre, Especialidad...');
+        const placeholderOutFocus = 'Ejemplo: Nombre, Especialidad...';
+        const placeholderInFocus = '¿Buscas a alguien o algo en específico?';
+
+        // Selects 'Phisical' speciality and search input get focus
+        HomePage.selectPhisicalSpeciality();
+        expect(HomePage.inputBusqueda).toBeFocused();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        // Clicking elsewhere removes focus from search input
+        HomePage.removeFocus();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
+
+        // Selects 'Language' speciality and search input get focus        
+        HomePage.selectLanguajeSpeciality();
+        expect(HomePage.inputBusqueda).toBeFocused();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        HomePage.removeFocus();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
+
+        // Selects 'Ocupational' speciality and search input get focus        
+        HomePage.selectOcupationalSpeciality();
+        expect(HomePage.inputBusqueda).toBeFocused();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderInFocus);
+        HomePage.removeFocus();
+        expect(HomePage.inputBusqueda).toHaveAttrContaining('placeholder', placeholderOutFocus);
     });
 
-    it.skip('Home Page 1.c. Search for Maria and validate she appears in the results', () => {
+
+    it('Home Page 1.c. Search for Maria and validate she appears in the results', () => {
         
-        HomePage.search('Maria')
+        const user = defaultUser();
+
+        // Search for given person and validates Home page is no longer displayed
+        HomePage.search(user.name)
         expect(HomePage.homeContenedor).not.toBePresent();
-
+        // Validates Search Page is displayed
         expect(SearchPage.searchContenedor).toBePresent();
-
-
+        // Validates there are results, 'No hay resultados para mostrar.' message won't display
+        expect(SearchPage.noResultsMessage).not.toBePresent();
+        // Validates given person is the top result
+        expect(SearchPage.resultName).toHaveTextContaining(user.name);
     });
 });
 

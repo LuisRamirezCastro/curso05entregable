@@ -7,16 +7,16 @@ function defaultUser() {
 function defaultSpecialities() {
     return [
         {
-            "name": "FÍSICA",
-            "url": "phisical"
+            name: "FÍSICA",
+            url: "sp=phisical"
         },
         {
-            "name": 'LENGUAJE',
-            "url": 'language'
+            name: 'LENGUAJE',
+            url: 'sp=language'
         },
         {
-            "name": 'Ocupacional',
-            "url": 'ocupational'
+            name: 'OCUPACIONAL',
+            url: 'sp=ocupational'
         }
     ]
 };
